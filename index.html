@@ -1,73 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fichier PNG Aléatoire</title>
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random PNG Viewer</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Chemin du dossier contenant les fichiers PNG
-            const dossierImages = './';
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Dossier contenant vos fichiers PNG
+      const folderPath = './';
 
-            // Appel de la fonction pour afficher une image aléatoire
-            afficherImageAleatoire(dossierImages);
-        });
+      // Récupérez la liste des fichiers PNG dans le dossier
+      fetch(`${folderPath}`)
+        .then(response => response.json())
+        .then(fileList => {
+          // Filtrer les fichiers PNG
+          const pngFiles = fileList.filter(file => file.endsWith('.png'));
 
-        function afficherImageAleatoire(dossierImages) {
-            // Requête AJAX pour récupérer la liste des fichiers dans le dossier
-            const xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        try {
-                            const fichiers = JSON.parse(xhr.responseText);
+          // Choisissez un fichier aléatoire
+          const randomFile = pngFiles[Math.floor(Math.random() * pngFiles.length)];
 
-                            // Sélection aléatoire d'un fichier parmi la liste
-                            const fichierAleatoire = fichiers[Math.floor(Math.random() * fichiers.length)];
+          // Créez l'élément image et définissez son chemin source
+          const imgElement = document.createElement('img');
+          imgElement.src = `${folderPath}/${randomFile}`;
 
-                            // Construction du chemin complet de l'image
-                            const cheminImage = dossierImages + '/' + fichierAleatoire;
-
-                            // Affichage de l'image dans la balise img
-                            const imgElement = document.createElement('img');
-                            imgElement.src = cheminImage;
-
-                            // Suppression de l'ancienne image s'il y en a une
-                            const ancienneImage = document.querySelector('img');
-                            if (ancienneImage) {
-                                document.body.removeChild(ancienneImage);
-                            }
-
-                            // Ajout de la nouvelle image au corps de la page
-                            document.body.appendChild(imgElement);
-                        } catch (error) {
-                            console.error("Erreur lors de l'analyse JSON:", error);
-                        }
-                    } else {
-                        console.error("Erreur de la requête AJAX. Statut:", xhr.status);
-                    }
-                }
-            };
-
-            xhr.open('GET', 'liste_images.php?dossier=' + encodeURIComponent(dossierImages), true);
-            xhr.send();
-        }
-    </script>
+          // Ajoutez l'élément image au corps du document
+          document.body.appendChild(imgElement);
+        })
+        .catch(error => console.error('Erreur lors du chargement de la liste des fichiers:', error));
+    });
+  </script>
 </body>
 </html>
