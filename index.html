@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random PNG Viewer</title>
-  <style>
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image aléatoire</title>
+    <style>
+        body {
+            text-align: center;
+            margin: 20px;
+        }
+        img {
+            max-width: 100%;
+            max-height: 80vh;
+        }
+    </style>
 </head>
 <body>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Dossier contenant vos fichiers PNG
-      const folderPath = 'chemin/vers/votre/dossier';
+    <h1>Image Aléatoire</h1>
+    <img id="randomImage" src="" alt="Image aléatoire">
+    <script>
+        // Liste des noms de fichiers PNG dans le dossier "images"
+        const images = [
+            'image1.png',
+            'image2.png',
+            'image3.png',
+            // Ajoutez d'autres noms de fichiers au besoin
+        ];
 
-      // Sélectionnez tous les fichiers PNG dans le dossier
-      fetch(`${folderPath}/list.json`)
-        .then(response => response.json())
-        .then(fileList => {
-          // Choisissez un fichier aléatoire
-          const randomFile = fileList[Math.floor(Math.random() * fileList.length)];
+        // Fonction pour obtenir un élément aléatoire du tableau
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
 
-          // Créez l'élément image et définissez son chemin source
-          const imgElement = document.createElement('img');
-          imgElement.src = `${folderPath}/${randomFile}`;
+        // Obtenez un nom de fichier PNG aléatoire
+        const randomImageName = getRandomElement(images);
 
-          // Ajoutez l'élément image au corps du document
-          document.body.appendChild(imgElement);
-        })
-        .catch(error => console.error('Erreur lors du chargement de la liste des fichiers:', error));
-    });
-  </script>
+        // Obtenez l'élément img et mettez à jour son attribut src
+        const randomImage = document.getElementById('randomImage');
+        randomImage.src = `images/${randomImageName}`;
+    </script>
 </body>
 </html>
