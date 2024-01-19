@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fichier PNG Aléatoire</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chemin du dossier contenant les fichiers PNG
+            const dossierImages = '/patate';
+
+            // Appel de la fonction pour afficher une image aléatoire
+            afficherImageAleatoire(dossierImages);
+        });
+
+        function afficherImageAleatoire(dossierImages) {
+            // Requête AJAX pour récupérer la liste des fichiers dans le dossier
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const fichiers = JSON.parse(xhr.responseText);
+
+                    // Sélection aléatoire d'un fichier parmi la liste
+                    const fichierAleatoire = fichiers[Math.floor(Math.random() * fichiers.length)];
+
+                    // Construction du chemin complet de l'image
+                    const cheminImage = dossierImages + '/' + fichierAleatoire;
+
+                    // Affichage de l'image dans la balise img
+                    const imgElement = document.createElement('img');
+                    imgElement.src = cheminImage;
+
+                    // Suppression de l'ancienne image s'il y en a une
+                    const ancienneImage = document.querySelector('img');
+                    if (ancienneImage) {
+                        document.body.removeChild(ancienneImage);
+                    }
+
+                    // Ajout de la nouvelle image au corps de la page
+                    document.body.appendChild(imgElement);
+                }
+            };
+
+            xhr.open('GET', 'liste_images.php?dossier=' + encodeURIComponent(dossierImages), true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
