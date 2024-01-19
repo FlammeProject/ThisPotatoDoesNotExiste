@@ -18,17 +18,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Dossier contenant vos fichiers PNG
-      const folderPath = './';
+      const folderPath = 'chemin/vers/votre/dossier';
 
-      // Récupérez la liste des fichiers PNG dans le dossier
-      fetch(`${folderPath}`)
+      // Sélectionnez tous les fichiers PNG dans le dossier
+      fetch(`${folderPath}/list.json`)
         .then(response => response.json())
         .then(fileList => {
-          // Filtrer les fichiers PNG
-          const pngFiles = fileList.filter(file => file.endsWith('.png'));
-
           // Choisissez un fichier aléatoire
-          const randomFile = pngFiles[Math.floor(Math.random() * pngFiles.length)];
+          const randomFile = fileList[Math.floor(Math.random() * fileList.length)];
 
           // Créez l'élément image et définissez son chemin source
           const imgElement = document.createElement('img');
