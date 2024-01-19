@@ -33,27 +33,35 @@
             // Requête AJAX pour récupérer la liste des fichiers dans le dossier
             const xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const fichiers = JSON.parse(xhr.responseText);
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            const fichiers = JSON.parse(xhr.responseText);
 
-                    // Sélection aléatoire d'un fichier parmi la liste
-                    const fichierAleatoire = fichiers[Math.floor(Math.random() * fichiers.length)];
+                            // Sélection aléatoire d'un fichier parmi la liste
+                            const fichierAleatoire = fichiers[Math.floor(Math.random() * fichiers.length)];
 
-                    // Construction du chemin complet de l'image
-                    const cheminImage = dossierImages + '/' + fichierAleatoire;
+                            // Construction du chemin complet de l'image
+                            const cheminImage = dossierImages + '/' + fichierAleatoire;
 
-                    // Affichage de l'image dans la balise img
-                    const imgElement = document.createElement('img');
-                    imgElement.src = cheminImage;
+                            // Affichage de l'image dans la balise img
+                            const imgElement = document.createElement('img');
+                            imgElement.src = cheminImage;
 
-                    // Suppression de l'ancienne image s'il y en a une
-                    const ancienneImage = document.querySelector('img');
-                    if (ancienneImage) {
-                        document.body.removeChild(ancienneImage);
+                            // Suppression de l'ancienne image s'il y en a une
+                            const ancienneImage = document.querySelector('img');
+                            if (ancienneImage) {
+                                document.body.removeChild(ancienneImage);
+                            }
+
+                            // Ajout de la nouvelle image au corps de la page
+                            document.body.appendChild(imgElement);
+                        } catch (error) {
+                            console.error("Erreur lors de l'analyse JSON:", error);
+                        }
+                    } else {
+                        console.error("Erreur de la requête AJAX. Statut:", xhr.status);
                     }
-
-                    // Ajout de la nouvelle image au corps de la page
-                    document.body.appendChild(imgElement);
                 }
             };
 
