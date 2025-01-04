@@ -19,7 +19,7 @@
 <body>
     <img id="randomImage" src="" alt="potato">
     <script>
-        // Liste des noms de fichiers PNG dans le dossier "images"
+        
         const images = [
             'image1.png',
             'image2.png',
@@ -33,18 +33,18 @@
             'image10.png',
             'image11.png',
             'image12.png',
-            // Ajoutez d'autres noms de fichiers au besoin
+            
         ];
 
-        // Fonction pour obtenir un élément aléatoire du tableau
+        
         function getRandomElement(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        // Obtenez un nom de fichier PNG aléatoire
+        
         const randomImageName = getRandomElement(images);
 
-        // Obtenez l'élément img et mettez à jour son attribut src
+        
         const randomImage = document.getElementById('randomImage');
         randomImage.src = `images/${randomImageName}`;
     </script>
