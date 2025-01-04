@@ -3,6 +3,8 @@
 
 This project displays a random potato.
 
+want to help improving ThisPotatoDoesNotExist ? Join our discord : https://discord.gg/BxkxRqGDfK
+
 ## Main Files
 
 - `index.html`: The main HTML file that displays a random potato image.
