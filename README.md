@@ -21,7 +21,7 @@ To see the project in action, simply open the `index.html` file in a web browser
 
 ## Demo
 
-You can see a live demo of this project at the following URL: [ThisPotatoDoesNotExist]([https://kittychan.xyz/potato])
+You can see a live demo of this project at the following URL: [ThisPotatoDoesNotExist](https://kittychan.xyz/potato)
 
 ## Contribution
 
